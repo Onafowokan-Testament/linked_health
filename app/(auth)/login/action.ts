@@ -1,3 +1,5 @@
+"use server";
+
 import prisma from "@/lib/prisma";
 import { LoginValue, LoginSchema } from "./../../../lib/validation";
 import { verify } from "@node-rs/argon2";
