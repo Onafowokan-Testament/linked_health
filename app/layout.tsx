@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { ThemeProvider } from "next-themes";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -16,7 +17,7 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: {
     template: "%s  -  LinkedHealth",
-    default: "LinkedHealth"
+    default: "LinkedHealth",
   },
   description: "Linked Health - Let the sick get together",
 };
@@ -31,7 +32,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ThemeProvider
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+          attribute="class"
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

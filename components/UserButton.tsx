@@ -8,14 +8,19 @@ import {
   DropdownMenuTrigger,
   DropdownMenuItem,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuPortal,
 } from "./ui/dropdown-menu";
 import UserAvatar from "./UserAvatar";
 
 import { useSession } from "@/app/(main)/SessionProvider";
 
 import Link from "next/link";
-import { LogOutIcon, UserIcon } from "lucide-react";
+import { Check, LogOutIcon, Monitor, MoonIcon, UserIcon } from "lucide-react";
 import { logout } from "@/app/(auth)/action";
+import { useTheme } from "next-themes";
 
 interface UserButtonProps {
   className?: string;
@@ -23,6 +28,8 @@ interface UserButtonProps {
 
 export default function UserButton({ className }: UserButtonProps) {
   const { user } = useSession();
+
+  const { theme, setTheme } = useTheme();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -39,6 +46,36 @@ export default function UserButton({ className }: UserButtonProps) {
             Profile
           </DropdownMenuItem>
         </Link>
+
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger className="flex gap-2">
+            <Monitor className="mr-2 size-4" />
+            Themes
+          </DropdownMenuSubTrigger>
+
+          <DropdownMenuPortal>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem onClick={() => setTheme("system")}>
+                <Monitor className="mr-2 size-4" />
+                System Default
+                {theme === "system" && <Check className="ms-2 size-4" />}
+              </DropdownMenuItem>
+
+              <DropdownMenuItem onClick={() => setTheme("light")}>
+                <Monitor className="mr-2 size-4" />
+                Light
+                {theme === "light" && <Check className="ms-2 size-4" />}
+              </DropdownMenuItem>
+
+              <DropdownMenuItem onClick={() => setTheme("dark")}>
+                <MoonIcon className="mr-2 size-4" />
+                Dark
+                {theme === "dark" && <Check className="ms-2 size-4" />}
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuPortal>
+        </DropdownMenuSub>
+
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="flex gap-2"
