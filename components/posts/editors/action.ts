@@ -1,9 +1,8 @@
-import { Post } from "./../../../node_modules/.prisma/client/index.d";
+"use server";
+
 import { validateRequest } from "@/app/auth";
 import prisma from "@/lib/prisma";
 import { createPostSchema } from "@/lib/validation";
-import React from "react";
-("use server");
 
 const submitPost = async (input: String) => {
   const { user } = await validateRequest();
