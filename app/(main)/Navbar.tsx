@@ -1,3 +1,4 @@
+import SearchField from "@/components/SearchField";
 import UserButton from "@/components/UserButton";
 import Link from "next/link";
 import React from "react";
@@ -9,7 +10,8 @@ const Navbar = () => {
         <Link href={"/"} className="text-2xl font-bold text-primary">
           LinkedHealth
         </Link>
-        <UserButton />
+        <SearchField />
+        <UserButton className="sm:ms-auto" />
       </div>
     </div>
   );
