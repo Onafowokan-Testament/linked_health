@@ -33,7 +33,7 @@ const page = () => {
         <Image
           src={signup_image}
           alt=""
-          className="hidden md:block w-1/2 object-cover"
+          className="hidden md:block w-1/2  object-cover"
         />
       </div>
     </main>
