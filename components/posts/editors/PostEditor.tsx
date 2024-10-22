@@ -8,8 +8,11 @@ import UserAvatar from "@/components/UserAvatar";
 import { useSession } from "@/app/(main)/SessionProvider";
 import { Button } from "@/components/ui/button";
 import "./styles.css";
+import { useTransition } from "react";
+import LoadingButton from "@/components/LoadingButton";
 
 export default function PostEditor() {
+  const [isPending, startTransistion] = useTransition();
   const { user } = useSession();
   const editor = useEditor({
     extensions: [
@@ -29,8 +32,9 @@ export default function PostEditor() {
     }) || "";
 
   async function onSubmit() {
-    await submitPost(input);
-
+    startTransistion(async () => {
+      await submitPost(input);
+    });
     editor?.commands.clearContent();
   }
   return (
@@ -44,14 +48,16 @@ export default function PostEditor() {
       </div>
 
       <div className="flex justify-end">
-        <Button
+        <LoadingButton
           onClick={onSubmit}
           disabled={!input.trim()}
           className="min-w-20"
+          type="submit"
+          loading={isPending}
         >
           {" "}
           Post
-        </Button>
+        </LoadingButton>
       </div>
     </div>
   );
