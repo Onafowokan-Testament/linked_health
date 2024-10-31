@@ -10,10 +10,14 @@ import { Button } from "@/components/ui/button";
 import "./styles.css";
 import { useTransition } from "react";
 import LoadingButton from "@/components/LoadingButton";
+import { useSubmitPostMutation } from "./mutation";
 
 export default function PostEditor() {
   const [isPending, startTransistion] = useTransition();
   const { user } = useSession();
+
+  const mutation = useSubmitPostMutation();
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -32,8 +36,10 @@ export default function PostEditor() {
     }) || "";
 
   async function onSubmit() {
-    startTransistion(async () => {
-      await submitPost(input);
+    mutation.mutate(input, {
+      onSuccess: () => {
+        editor?.commands.clearContent();
+      },
     });
     editor?.commands.clearContent();
   }
@@ -53,7 +59,7 @@ export default function PostEditor() {
           disabled={!input.trim()}
           className="min-w-20"
           type="submit"
-          loading={isPending}
+          loading={mutation.isPending}
         >
           {" "}
           Post
