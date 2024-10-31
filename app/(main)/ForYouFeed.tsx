@@ -1,5 +1,6 @@
 "use client";
 
+import InfiniteScrollContainer from "@/components/InfiniteScrollContainer";
 import Posts from "@/components/Posts";
 import { Button } from "@/components/ui/button";
 import kyInstance from "@/lib/ky";
@@ -42,11 +43,15 @@ export default function ForYouFeed() {
   }
 
   return (
-    <div className="space-y-5">
+    <InfiniteScrollContainer
+      className="space-y-5"
+      onButtonReached={() => hasNextPage && isFetching && fetchNextPage()}
+    >
       {posts.map((post) => (
         <Posts key={post.id} post={post} />
       ))}
-      <Button onClick={() => fetchNextPage()}>LoadMore </Button>
-    </div>
+
+      {isFetchingNextPage && <Loader2 className="mx-auto my-3 animate-spin" />}
+    </InfiniteScrollContainer>
   );
 }
