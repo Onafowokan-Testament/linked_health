@@ -2,6 +2,7 @@
 
 import InfiniteScrollContainer from "@/components/InfiniteScrollContainer";
 import Posts from "@/components/Posts";
+import DeletePostDialog from "@/components/posts/DeletePostDialog";
 import PostsLoadingSkeleton from "@/components/posts/PostLoadingSkeleton";
 import { Button } from "@/components/ui/button";
 import kyInstance from "@/lib/ky";
